@@ -1,0 +1,10 @@
+# Maven/Java
+target/
+*.iml
+.idea/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store

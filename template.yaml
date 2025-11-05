@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda (Java 17) triggered by S3 object create events
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Source S3 bucket that will trigger the Lambda
+
+Resources:
+  MtqAzureZippingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mtq-azure-zipping
+      Runtime: java17
+      Handler: com.wsp.metocean.lambda.S3EventHandler::handleRequest
+      MemorySize: 512
+      Timeout: 60
+      Architectures:
+        - x86_64
+      CodeUri: .
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref BucketName
+      Events:
+        S3Put:
+          Type: S3
+          Properties:
+            Bucket: !Ref BucketName
+            Events: s3:ObjectCreated:*
+    Metadata:
+      BuildMethod: maven
+
+Outputs:
+  FunctionArn:
+    Value: !GetAtt MtqAzureZippingFunction.Arn
+    Description: ARN of the deployed Lambda function
