@@ -152,7 +152,7 @@ public class S3EventHandler implements RequestHandler<S3Event, String> {
         }
         boolean istesting = event.getRecords().size() == 1 && event.getRecords().get(0) != null && event.getRecords().get(0).getS3().getBucket().getName().equals("test-bucket");
         if (istesting) {
-            String key = "Sites/qc/RQCSMRF-13/products/2025/09.zip";//s3://nimbus-clients/
+            String key = "Sites/qc/RQCSMRF-21/products/2025/12.zip";//s3://nimbus-clients/
             String azureFileNam = convertS3KeyToAzureFileName(key);
             String cameraStoragePath = "Imagescameras/"; // note the trailing space—remove if not intended
             String containerName = "depot";
@@ -164,7 +164,7 @@ public class S3EventHandler implements RequestHandler<S3Event, String> {
 
 String[] args2 = new String[] {
                     "--url", "https://sttrprosmrprod01cc.blob.core.windows.net/depot?sv=2025-01-05&si=FournisseurDepot12025&sr=c&sig=ErtPiJiio4VH9jzYlU3z%2FoRNsV2a2361uQYDlfpPyMc%3D",
-                    "--name", "Imagescameras/2025-05_SMRF-00-test-1.zip",
+                    "--name", blobName,
                     "--file", "/tmp/mtq_azure_zipping/README.md"
             };
             Map<String, String> a = parseArgs(args2);
